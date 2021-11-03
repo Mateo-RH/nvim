@@ -25,11 +25,14 @@ Plug 'vim-airline/vim-airline' "status bar
 Plug 'nvim-lua/plenary.nvim' " navitation
 Plug 'nvim-telescope/telescope.nvim'
 
+" TS
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
 call plug#end() 
 
-colorscheme onedark
+colorscheme gruvbox
 let g:airline_theme='onedark'
-" let g:gruvbox_contrast_dark = "hard"
+let g:gruvbox_contrast_dark = "hard"
 
 set number
 set mouse=a
@@ -56,6 +59,7 @@ nmap <Leader>q :q<CR>
 nmap <Leader>nt :NERDTreeToggle<CR>
 nmap <Leader>s <Plug>(easymotion-s2)
 noremap <leader>/ :Commentary<cr>
+map <Leader>t :term ++close<cr>
 
 
 " CoC
@@ -116,4 +120,18 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Ts Syntax
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    custom_captures = {
+      -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
+      ["foo.bar"] = "Identifier",
+    },
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
 
