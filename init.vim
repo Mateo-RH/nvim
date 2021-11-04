@@ -7,7 +7,6 @@ call plug#begin('~/.config/nvim/plugged')
 
 " Theme
 Plug 'morhetz/gruvbox'
-Plug 'tomasr/molokai'
 Plug 'joshdick/onedark.vim'
 
 " Typing
@@ -24,6 +23,7 @@ Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline' "status bar
 Plug 'nvim-lua/plenary.nvim' " navitation
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'tpope/vim-fugitive'
 
 " TS
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -48,6 +48,7 @@ set scrolloff=5
 set relativenumber
 set ruler 
 set noshowmode
+set nohlsearch
 
 let mapleader=" "
 
@@ -55,7 +56,6 @@ command! Reload execute "source ~/.config/nvim/init.vim"
 command! Config execute ":e ~/.config/nvim/init.vim"
 
 nmap <Leader>w :w<CR>
-nmap <Leader>q :q<CR>
 nmap <Leader>nt :NERDTreeToggle<CR>
 nmap <Leader>s <Plug>(easymotion-s2)
 noremap <leader>/ :Commentary<cr>
