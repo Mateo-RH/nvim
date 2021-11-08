@@ -8,6 +8,7 @@ call plug#begin('~/.config/nvim/plugged')
 " Theme
 Plug 'morhetz/gruvbox'
 Plug 'joshdick/onedark.vim'
+Plug 'tomasr/molokai'
 
 " Typing
 Plug 'tpope/vim-surround'
@@ -19,7 +20,10 @@ Plug 'terryma/vim-multiple-cursors'
 " IDE
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mhinz/vim-signify' "git marks
+
+Plug 'ryanoasis/vim-devicons'
 Plug 'preservim/nerdtree'
+
 Plug 'vim-airline/vim-airline' "status bar
 Plug 'nvim-lua/plenary.nvim' " navitation
 Plug 'nvim-telescope/telescope.nvim'
@@ -34,6 +38,7 @@ colorscheme gruvbox
 let g:airline_theme='onedark'
 let g:gruvbox_contrast_dark = "hard"
 
+set encoding=UTF-8
 set number
 set mouse=a
 set numberwidth=1
@@ -60,6 +65,7 @@ nmap <Leader>nt :NERDTreeToggle<CR>
 nmap <Leader>s <Plug>(easymotion-s2)
 noremap <leader>/ :Commentary<cr>
 map <Leader>t :term ++close<cr>
+nnoremap Y y$
 
 
 " CoC
@@ -160,9 +166,9 @@ function! TermToggle(height)
 endfunction
 
 " Toggle terminal on/off (neovim)
-nnoremap <Leader>t :call TermToggle(12)<CR>
-inoremap <Leader>t <Esc>:call TermToggle(12)<CR>
-tnoremap <A-t> <C-\><C-n>:call TermToggle(12)<CR>
+nnoremap <C-t> :call TermToggle(12)<CR>
+inoremap <C-t> <Esc>:call TermToggle(12)<CR>
+tnoremap <C-t> <C-\><C-n>:call TermToggle(12)<CR>
 
 " Terminal go back to normal mode
 tnoremap <Esc> <C-\><C-n>
