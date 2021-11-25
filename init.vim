@@ -29,6 +29,9 @@ Plug 'nvim-lua/plenary.nvim' " navitation
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'tpope/vim-fugitive'
 
+" Worktree
+Plug 'ThePrimeagen/git-worktree.nvim'
+
 " TS
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
@@ -61,17 +64,26 @@ command! Reload execute "source ~/.config/nvim/init.vim"
 command! Config execute ":e ~/.config/nvim/init.vim"
 
 nmap <Leader>w :w<CR>
-nmap <Leader>nt :NERDTreeToggle<CR>
 nmap <Leader>s <Plug>(easymotion-s2)
 noremap <leader>/ :Commentary<cr>
 map <Leader>t :term ++close<cr>
 nnoremap Y y$
 
+" NerdTree
+let NERDTreeShowHidden=1
+nmap <Leader>nt :call NERDTreeToggleAndRefresh()<CR>
+
+function NERDTreeToggleAndRefresh()
+  :NERDTreeToggle
+  if g:NERDTree.IsOpen()
+    :NERDTreeRefreshRoot
+  endif
+endfunction
+
 
 " CoC
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
@@ -127,6 +139,30 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
+" Worktree
+nmap <Leader>st :lua require('telescope').extensions.git_worktree.git_worktrees()<CR>
+nmap <Leader>ct :lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>
+lua <<EOF
+require("telescope").load_extension("git_worktree")
+require("git-worktree").setup({
+    update_on_change = true
+})
+EOF
+
+lua <<EOF
+require('telescope').setup{
+  defaults = {
+  },
+  pickers = {
+    find_files = {
+      theme = "dropdown",
+    }
+  },
+  extensions = {
+  }
+}
+EOF
+
 " Ts Syntax
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
@@ -141,35 +177,3 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
-
-" Terminal Function
-let g:term_buf = 0
-let g:term_win = 0
-function! TermToggle(height)
-    if win_gotoid(g:term_win)
-        hide
-    else
-        botright new
-        exec "resize " . a:height
-        try
-            exec "buffer " . g:term_buf
-        catch
-            call termopen($SHELL, {"detach": 0})
-            let g:term_buf = bufnr("")
-            set nonumber
-            set norelativenumber
-            set signcolumn=no
-        endtry
-        startinsert!
-        let g:term_win = win_getid()
-    endif
-endfunction
-
-" Toggle terminal on/off (neovim)
-nnoremap <C-t> :call TermToggle(12)<CR>
-inoremap <C-t> <Esc>:call TermToggle(12)<CR>
-tnoremap <C-t> <C-\><C-n>:call TermToggle(12)<CR>
-
-" Terminal go back to normal mode
-tnoremap <Esc> <C-\><C-n>
-tnoremap :q! <C-\><C-n>:q!<CR>
