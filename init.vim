@@ -10,6 +10,8 @@ Plug 'morhetz/gruvbox'
 Plug 'joshdick/onedark.vim'
 Plug 'tomasr/molokai'
 
+Plug 'github/copilot.vim'
+
 " Typing
 Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
@@ -28,9 +30,6 @@ Plug 'vim-airline/vim-airline' "status bar
 Plug 'nvim-lua/plenary.nvim' " navitation
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'tpope/vim-fugitive'
-
-" Worktree
-Plug 'ThePrimeagen/git-worktree.nvim'
 
 " TS
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -66,8 +65,10 @@ command! Config execute ":e ~/.config/nvim/init.vim"
 nmap <Leader>w :w<CR>
 nmap <Leader>s <Plug>(easymotion-s2)
 noremap <leader>/ :Commentary<cr>
-map <Leader>t :term ++close<cr>
 nnoremap Y y$
+nmap <Leader>gf :diffget //2<CR>
+nmap <Leader>gj :diffget //3<CR>
+nmap <Leader>gs :G<CR>
 
 " NerdTree
 let NERDTreeShowHidden=1
@@ -138,16 +139,6 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
-" Worktree
-nmap <Leader>st :lua require('telescope').extensions.git_worktree.git_worktrees()<CR>
-nmap <Leader>ct :lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>
-lua <<EOF
-require("telescope").load_extension("git_worktree")
-require("git-worktree").setup({
-    update_on_change = true
-})
-EOF
 
 lua <<EOF
 require('telescope').setup{
