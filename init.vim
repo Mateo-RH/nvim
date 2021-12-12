@@ -30,15 +30,18 @@ Plug 'vim-airline/vim-airline' "status bar
 Plug 'nvim-lua/plenary.nvim' " navitation
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'tpope/vim-fugitive'
+Plug 'ThePrimeagen/harpoon'
 
 " TS
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 call plug#end() 
 
-colorscheme gruvbox
+set background=dark
 let g:airline_theme='onedark'
-let g:gruvbox_contrast_dark = "hard"
+let g:gruvbox_contrast_dark='hard'
+colorscheme gruvbox
+
 
 set encoding=UTF-8
 set number
@@ -64,11 +67,28 @@ command! Config execute ":e ~/.config/nvim/init.vim"
 
 nmap <Leader>w :w<CR>
 nmap <Leader>s <Plug>(easymotion-s2)
-noremap <leader>/ :Commentary<cr>
+
+nmap <Leader>ha :lua require("harpoon.mark").add_file()<CR>
+nmap <Leader>h1 :lua require("harpoon.ui").nav_file(1) <CR>
+nmap <Leader>h2 :lua require("harpoon.ui").nav_file(2) <CR>
+nmap <Leader>h3 :lua require("harpoon.ui").nav_file(3) <CR>
+nmap <Leader>hl :lua require('harpoon.ui').toggle_quick_menu()<CR>
+nmap <Leader>hn :lua require("harpoon.ui").nav_next()<CR>
+nmap <Leader>hp :lua require("harpoon.ui").nav_prev()<CR>
+
 nnoremap Y y$
 nmap <Leader>gf :diffget //2<CR>
 nmap <Leader>gj :diffget //3<CR>
 nmap <Leader>gs :G<CR>
+
+" Undo break points
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
 
 " NerdTree
 let NERDTreeShowHidden=1
