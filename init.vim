@@ -3,10 +3,33 @@
 "    mkdir $HOME/.config/nvim/plugged
 set nocompatible
 filetype off
-call plug#begin('~/.config/nvim/plugged')
+set background=dark
+set encoding=UTF-8
+set number
+set mouse=a
+set numberwidth=1
+set expandtab
+set showcmd
+set wildmenu
+set shiftwidth=4
+set hidden
+set nowrap
+set incsearch
+syntax enable
+set showmatch
+set scrolloff=5
+set relativenumber
+set ruler 
+set noshowmode
+set nohlsearch
+set signcolumn=yes
+set colorcolumn=86
 
-" Theme
-Plug 'morhetz/gruvbox'
+let g:airline_theme='onedark'
+let g:gruvbox_contrast_dark='hard'
+
+call plug#begin('~/.config/nvim/plugged')
+Plug 'gruvbox-community/gruvbox'
 Plug 'joshdick/onedark.vim'
 Plug 'tomasr/molokai'
 
@@ -37,37 +60,32 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 call plug#end() 
 
-set background=dark
-let g:airline_theme='onedark'
-let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
 
-
-set encoding=UTF-8
-set number
-set mouse=a
-set numberwidth=1
-set expandtab
-set showcmd
-set wildmenu
-set shiftwidth=4
-set hidden
-syntax enable
-set showmatch
-set scrolloff=5
-set relativenumber
-set ruler 
-set noshowmode
-set nohlsearch
-
-let mapleader=" "
-
-command! Reload execute "source ~/.config/nvim/init.vim"
+" Custom mappings
+let mapleader = " " 
 command! Config execute ":e ~/.config/nvim/init.vim"
-
 nmap <Leader>w :w<CR>
 nmap <Leader>s <Plug>(easymotion-s2)
+noremap <leader>/ :Commentary<cr>
+nnoremap <Leader>co :copen<CR>
+nnoremap <Leader>cn :cn<CR>
+nnoremap <Leader>cp :cp<CR>
 
+
+" Custom behaviour
+" Undo break points
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+" Movew lines
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+" Yank behave like cut and delete
+nnoremap Y y$
+
+" Harpoon
 nmap <Leader>ha :lua require("harpoon.mark").add_file()<CR>
 nmap <Leader>h1 :lua require("harpoon.ui").nav_file(1) <CR>
 nmap <Leader>h2 :lua require("harpoon.ui").nav_file(2) <CR>
@@ -76,19 +94,10 @@ nmap <Leader>hl :lua require('harpoon.ui').toggle_quick_menu()<CR>
 nmap <Leader>hn :lua require("harpoon.ui").nav_next()<CR>
 nmap <Leader>hp :lua require("harpoon.ui").nav_prev()<CR>
 
-nnoremap Y y$
+" Fugitive
 nmap <Leader>gf :diffget //2<CR>
 nmap <Leader>gj :diffget //3<CR>
 nmap <Leader>gs :G<CR>
-
-" Undo break points
-inoremap , ,<c-g>u
-inoremap . .<c-g>u
-inoremap ! !<c-g>u
-inoremap ? ?<c-g>u
-
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
 
 " NerdTree
 let NERDTreeShowHidden=1
