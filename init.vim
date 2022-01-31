@@ -46,6 +46,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mhinz/vim-signify' "git marks
 
+" Three
 Plug 'ryanoasis/vim-devicons'
 Plug 'preservim/nerdtree'
 
@@ -57,6 +58,9 @@ Plug 'ThePrimeagen/harpoon'
 
 " TS
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+" Debug
+Plug 'szw/vim-maximizer'
 
 call plug#end() 
 
@@ -71,6 +75,9 @@ noremap <leader>/ :Commentary<cr>
 nnoremap <Leader>co :copen<CR>
 nnoremap <Leader>cn :cn<CR>
 nnoremap <Leader>cp :cp<CR>
+nnoremap <Leader>mt :MaximizerToggle<CR>
+map <Leader>t :!npm run test<CR>
+map <Leader>gp :!git pull --rebase && git push<CR>
 
 
 " Custom behaviour
@@ -115,6 +122,8 @@ endfunction
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> [ <Plug>(coc-diagnostic-prev)
+nmap <silent> ] <Plug>(coc-diagnostic-next)
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
@@ -127,9 +136,11 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 nmap <leader>qf  <Plug>(coc-fix-current)
 
 
+
 let g:coc_global_extensions = [
             \ 'coc-snippets',
             \ 'coc-pairs',
+            \ 'coc-python',
             \ 'coc-tsserver',
             \ 'coc-eslint',
             \ 'coc-prettier',
