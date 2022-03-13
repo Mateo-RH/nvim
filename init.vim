@@ -27,6 +27,7 @@ set colorcolumn=86
 
 let g:airline_theme='onedark'
 let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_contrast_light='hard'
 
 call plug#begin('~/.config/nvim/plugged')
 Plug 'gruvbox-community/gruvbox'
@@ -78,7 +79,8 @@ nnoremap <Leader>cp :cp<CR>
 nnoremap <Leader>mt :MaximizerToggle<CR>
 map <Leader>t :!npm run test<CR>
 map <Leader>gp :!git pull --rebase && git push<CR>
-
+nnoremap <Leader>bl :set bg=light<CR>
+nnoremap <Leader>bd :set bg=dark<CR>
 
 " Custom behaviour
 " Undo break points
