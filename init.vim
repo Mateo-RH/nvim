@@ -23,7 +23,7 @@ set ruler
 set noshowmode
 set nohlsearch
 set signcolumn=yes
-set colorcolumn=86
+set colorcolumn=88
 
 let g:airline_theme='onedark'
 let g:gruvbox_contrast_dark='hard'
@@ -41,7 +41,6 @@ Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
 Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-commentary'
-Plug 'terryma/vim-multiple-cursors'
 
 " IDE
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -59,9 +58,6 @@ Plug 'ThePrimeagen/harpoon'
 
 " TS
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
-" Debug
-Plug 'szw/vim-maximizer'
 
 call plug#end() 
 
@@ -81,8 +77,6 @@ map <Leader>t :!npm run test<CR>
 map <Leader>gp :!git pull --rebase && git push<CR>
 nnoremap <Leader>bl :set bg=light<CR>
 nnoremap <Leader>bd :set bg=dark<CR>
-
-" Custom behaviour
 " Undo break points
 inoremap , ,<c-g>u
 inoremap . .<c-g>u
@@ -93,19 +87,21 @@ vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 " Yank behave like cut and delete
 nnoremap Y y$
+" Clean all buffers
+command! BufOnly silent! execute "%bd|e#|bd#"
 
 " Harpoon
 nmap <Leader>ha :lua require("harpoon.mark").add_file()<CR>
 nmap <Leader>h1 :lua require("harpoon.ui").nav_file(1) <CR>
 nmap <Leader>h2 :lua require("harpoon.ui").nav_file(2) <CR>
 nmap <Leader>h3 :lua require("harpoon.ui").nav_file(3) <CR>
+nmap <Leader>h4 :lua require("harpoon.ui").nav_file(4) <CR>
+nmap <Leader>h5 :lua require("harpoon.ui").nav_file(5) <CR>
 nmap <Leader>hl :lua require('harpoon.ui').toggle_quick_menu()<CR>
 nmap <Leader>hn :lua require("harpoon.ui").nav_next()<CR>
 nmap <Leader>hp :lua require("harpoon.ui").nav_prev()<CR>
 
 " Fugitive
-nmap <Leader>gf :diffget //2<CR>
-nmap <Leader>gj :diffget //3<CR>
 nmap <Leader>gs :G<CR>
 
 " NerdTree
