@@ -62,6 +62,10 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end() 
 
 colorscheme gruvbox
+if (has("termguicolors"))
+  set termguicolors
+endif
+
 
 " Custom mappings
 let mapleader = " " 
