@@ -1,9 +1,12 @@
 call plug#begin('~/.config/nvim/plugged')
-  Plug 'tomasiser/vim-code-dark'
+ "Colorshceme
   Plug 'gruvbox-community/gruvbox'
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'joshdick/onedark.vim'
+  Plug 'vim-airline/vim-airline'
   Plug 'pangloss/vim-javascript'
-  Plug 'itchyny/lightline.vim'
-  Plug 'itchyny/vim-gitbranch'
+  Plug 'tpope/vim-surround'
+
 
   " Prod
   Plug 'szw/vim-maximizer'
@@ -11,6 +14,11 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'kassio/neoterm'
   Plug 'tpope/vim-commentary'
   Plug 'sbdchd/neoformat'
+  " Plug 'ThePrimeagen/harpoon'
+
+  " Three
+  Plug 'ryanoasis/vim-devicons'
+  Plug 'preservim/nerdtree'
 
   " Finder
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -21,7 +29,6 @@ call plug#begin('~/.config/nvim/plugged')
   " language server
   Plug 'neovim/nvim-lspconfig'
   Plug 'hrsh7th/nvim-compe'
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
   " Vim inspector
   Plug 'puremourning/vimspector'
@@ -67,22 +74,52 @@ endif
 let g:netrw_banner=0
 let g:markdown_fenced_languages = ['javascript', 'js=javascript', 'json=javascript']
 command! Config execute ":e ~/.config/nvim/init.vim"
+
 nmap <Leader>w :w<CR>
 nmap <Leader>q :q<CR>
+nnoremap <Leader>co :copen<CR>
+nnoremap <Leader>cn :cn<CR>
+nnoremap <Leader>cp :cp<CR>
+map <Leader>gp :!git pull --rebase && git push<CR>
 
+" Undo break points
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+
+" Yank behave like cut and delete
+nnoremap Y y$
+
+" Clean all buffers
+command! BufOnly silent! execute "%bd|e#|bd#"
+
+" Harpoon
+" nmap <Leader>ha :lua require("harpoon.mark").add_file()<CR>
+" nmap <Leader>h1 :lua require("harpoon.ui").nav_file(1) <CR>
+" nmap <Leader>h2 :lua require("harpoon.ui").nav_file(2) <CR>
+" nmap <Leader>h3 :lua require("harpoon.ui").nav_file(3) <CR>
+" nmap <Leader>h4 :lua require("harpoon.ui").nav_file(4) <CR>
+" nmap <Leader>h5 :lua require("harpoon.ui").nav_file(5) <CR>
+" nmap <Leader>hl :lua require('harpoon.ui').toggle_quick_menu()<CR>
+" nmap <Leader>hn :lua require("harpoon.ui").nav_next()<CR>
+" nmap <Leader>hp :lua require("harpoon.ui").nav_prev()<CR>
+
+" NerdTree
+let NERDTreeShowHidden=1
+nmap <Leader>nt :call NERDTreeToggleAndRefresh()<CR>
+
+function NERDTreeToggleAndRefresh()
+  :NERDTreeToggle
+  if g:NERDTree.IsOpen()
+    :NERDTreeRefreshRoot
+  endif
+endfunction
+
+let g:airline_theme='onedark'
 let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
 
-let g:lightline = {
-      \ 'colorscheme': 'codedark',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'gitbranch#name'
-      \ },
-      \ }
 
 " szw/vim-maximizer
 nnoremap <leader>m :MaximizerToggle!<CR>
@@ -113,7 +150,7 @@ endif
 
 " tpope/vim-fugitive
 nnoremap <leader>gs :G<cr>
-nnoremap <leader>gd :Gdiff master<cr>
+nnoremap <leader>gd :Gdiff main<cr>
 nnoremap <leader>gl :G log --oneline --decorate --all --graph<cr>
 
 " npm i -g typescript-language-server -s" neovim/nvim-lspconfig and nvim-lua/completion-nvim
