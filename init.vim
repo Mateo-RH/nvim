@@ -1,20 +1,22 @@
 call plug#begin('~/.config/nvim/plugged')
  "Colorshceme
   Plug 'gruvbox-community/gruvbox'
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'joshdick/onedark.vim'
   Plug 'vim-airline/vim-airline'
-  Plug 'pangloss/vim-javascript'
-  Plug 'tpope/vim-surround'
-
+  Plug 'airblade/vim-gitgutter'
 
   " Prod
   Plug 'szw/vim-maximizer'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'kassio/neoterm'
   Plug 'tpope/vim-commentary'
-  Plug 'sbdchd/neoformat'
-  " Plug 'ThePrimeagen/harpoon'
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'ThePrimeagen/harpoon'
+
+  " Typing
+  Plug 'tpope/vim-surround'
+  Plug 'Yggdroot/indentLine'
 
   " Three
   Plug 'ryanoasis/vim-devicons'
@@ -24,16 +26,20 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'tpope/vim-fugitive'
-  Plug 'airblade/vim-gitgutter'
 
   " language server
-  Plug 'neovim/nvim-lspconfig'
-  Plug 'hrsh7th/nvim-compe'
+  " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'pangloss/vim-javascript'
 
   " Vim inspector
   Plug 'puremourning/vimspector'
 call plug#end()
 
+filetype plugin indent on
+syntax enable
+
+set encoding=UTF-8
+set relativenumber
 set completeopt=menuone,noinsert,noselect
 set mouse=a
 set splitright
@@ -60,50 +66,48 @@ set wildmenu
 set numberwidth=1
 set showcmd
 set nowrap
-syntax enable
 set showmatch
 set ruler 
 set noshowmode
 set nohlsearch
 
-filetype plugin indent on
-let mapleader = " "
 if (has("termguicolors"))
   set termguicolors
 endif
 let g:netrw_banner=0
 let g:markdown_fenced_languages = ['javascript', 'js=javascript', 'json=javascript']
-command! Config execute ":e ~/.config/nvim/init.vim"
 
+let mapleader = " "
+command! Config execute ":e ~/.config/nvim/init.vim"
 nmap <Leader>w :w<CR>
 nmap <Leader>q :q<CR>
 nnoremap <Leader>co :copen<CR>
 nnoremap <Leader>cn :cn<CR>
 nnoremap <Leader>cp :cp<CR>
 map <Leader>gp :!git pull --rebase && git push<CR>
-
+noremap <leader>/ :Commentary<cr>
 " Undo break points
 inoremap , ,<c-g>u
 inoremap . .<c-g>u
 inoremap ! !<c-g>u
 inoremap ? ?<c-g>u
-
 " Yank behave like cut and delete
 nnoremap Y y$
-
 " Clean all buffers
 command! BufOnly silent! execute "%bd|e#|bd#"
 
+let g:airline_theme='onedark'
+let g:gruvbox_contrast_dark='hard'
+colorscheme gruvbox
+
 " Harpoon
-" nmap <Leader>ha :lua require("harpoon.mark").add_file()<CR>
-" nmap <Leader>h1 :lua require("harpoon.ui").nav_file(1) <CR>
-" nmap <Leader>h2 :lua require("harpoon.ui").nav_file(2) <CR>
-" nmap <Leader>h3 :lua require("harpoon.ui").nav_file(3) <CR>
-" nmap <Leader>h4 :lua require("harpoon.ui").nav_file(4) <CR>
-" nmap <Leader>h5 :lua require("harpoon.ui").nav_file(5) <CR>
-" nmap <Leader>hl :lua require('harpoon.ui').toggle_quick_menu()<CR>
-" nmap <Leader>hn :lua require("harpoon.ui").nav_next()<CR>
-" nmap <Leader>hp :lua require("harpoon.ui").nav_prev()<CR>
+nmap <Leader>ha :lua require("harpoon.mark").add_file()<CR>
+nmap <Leader>hl :lua require('harpoon.ui').toggle_quick_menu()<CR>
+nmap <Leader>h1 :lua require("harpoon.ui").nav_file(1) <CR>
+nmap <Leader>h2 :lua require("harpoon.ui").nav_file(2) <CR>
+nmap <Leader>h3 :lua require("harpoon.ui").nav_file(3) <CR>
+nmap <Leader>h4 :lua require("harpoon.ui").nav_file(4) <CR>
+nmap <Leader>h5 :lua require("harpoon.ui").nav_file(5) <CR>
 
 " NerdTree
 let NERDTreeShowHidden=1
@@ -116,11 +120,6 @@ function NERDTreeToggleAndRefresh()
   endif
 endfunction
 
-let g:airline_theme='onedark'
-let g:gruvbox_contrast_dark='hard'
-colorscheme gruvbox
-
-
 " szw/vim-maximizer
 nnoremap <leader>m :MaximizerToggle!<CR>
 
@@ -131,9 +130,6 @@ let g:neoterm_autoinsert = 1
 nnoremap <c-f> :Ttoggle<CR>
 inoremap <c-f> <Esc>:Ttoggle<CR>
 tnoremap <c-f> <c-\><c-n>:Ttoggle<CR>
-
-" sbdchd/neoformat
-nnoremap <leader>F :Neoformat prettier<CR>
 
 " junegunn/fzf.vim
 nnoremap <leader>ff :GFiles<CR>
@@ -154,31 +150,6 @@ nnoremap <leader>gd :Gdiff main<cr>
 nnoremap <leader>gl :G log --oneline --decorate --all --graph<cr>
 
 " npm i -g typescript-language-server -s" neovim/nvim-lspconfig and nvim-lua/completion-nvim
-lua require'lspconfig'.tsserver.setup{}
-
-nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gh     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> ac    <cmd>lua vim.lsp.buf.code_action()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> gR    <cmd>lua vim.lsp.buf.rename()<CR>
-
-" hrsh7th/nvim-compe
-lua << EOF
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  source = {
-    path = true;
-    buffer = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-  };
-}
-EOF
-inoremap <silent><expr> <Tab> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
 
 "Vimspector
 fun! GotoWindow(id)
@@ -216,15 +187,15 @@ let g:vimspector_sign_priority = {
   \ }
 
 "TreeSitter
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    custom_captures = {
-      -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-      ["foo.bar"] = "Identifier",
-    },
-    additional_vim_regex_highlighting = false,
-  },
-}
-EOF
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"   highlight = {
+"     enable = true,
+"     custom_captures = {
+"       -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
+"       ["foo.bar"] = "Identifier",
+"     },
+"     additional_vim_regex_highlighting = false,
+"   },
+" }
+" EOF
