@@ -18,6 +18,8 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'tpope/vim-surround'
   Plug 'Yggdroot/indentLine'
   Plug 'github/copilot.vim'
+  Plug 'windwp/nvim-autopairs'
+  Plug 'sbdchd/neoformat'
 
   " Three
   Plug 'ryanoasis/vim-devicons'
@@ -28,6 +30,8 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'tpope/vim-fugitive'
 
   " language server
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'hrsh7th/nvim-compe'
 
   " Vim inspector
   Plug 'puremourning/vimspector'
@@ -37,7 +41,7 @@ filetype plugin indent on
 
 set encoding=UTF-8
 set relativenumber
-set completeopt=menuone,noinsert,noselect
+set completeopt=menuone,noselect
 set mouse=a
 set splitright
 set splitbelow
@@ -132,7 +136,9 @@ tnoremap <c-f> <c-\><c-n>:Ttoggle<CR>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>fs :Telescope lsp_document_symbols<CR>
+nnoremap <silent>gy <cmd>:Telescope lsp_type_definitions<CR>
+
 lua <<EOF
 require('telescope').setup{
   pickers = {
@@ -192,3 +198,25 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
+"LSP
+lua require("lsp-config")
+lua require('nvim-autopairs').setup{}
+
+" 'hrsh7th/nvim-compe'
+lua << EOF
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  source = {
+    path = true;
+    buffer = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+    -- treesitter = true;
+  };
+}
+EOF
+
+"" prettier
+let g:neoformat_try_node_exe = 1
+nnoremap <leader>F :Neoformat<CR>
