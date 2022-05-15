@@ -1,7 +1,7 @@
 call plug#begin('~/.config/nvim/plugged')
  "Colorshceme
   Plug 'gruvbox-community/gruvbox'
-  " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'joshdick/onedark.vim'
   Plug 'vim-airline/vim-airline'
   Plug 'airblade/vim-gitgutter'
@@ -17,26 +17,23 @@ call plug#begin('~/.config/nvim/plugged')
   " Typing
   Plug 'tpope/vim-surround'
   Plug 'Yggdroot/indentLine'
+  Plug 'github/copilot.vim'
 
   " Three
   Plug 'ryanoasis/vim-devicons'
   Plug 'preservim/nerdtree'
 
   " Finder
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  Plug 'junegunn/fzf.vim'
+  Plug 'nvim-telescope/telescope.nvim'
   Plug 'tpope/vim-fugitive'
 
   " language server
-  " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'pangloss/vim-javascript'
 
   " Vim inspector
   Plug 'puremourning/vimspector'
 call plug#end()
 
 filetype plugin indent on
-syntax enable
 
 set encoding=UTF-8
 set relativenumber
@@ -131,25 +128,24 @@ nnoremap <c-f> :Ttoggle<CR>
 inoremap <c-f> <Esc>:Ttoggle<CR>
 tnoremap <c-f> <c-\><c-n>:Ttoggle<CR>
 
-" junegunn/fzf.vim
-nnoremap <leader>ff :GFiles<CR>
-nnoremap <leader>cc :History:<CR>
-nnoremap <leader>fg :Rg<CR>
-nnoremap <leader>fb :Buffers<CR>
-inoremap <expr> <c-x><c-x> fzf#vim#complete#path(
-    \ "find . -path '*/\.*' -prune -o -print \| sed '1d;s:^..::'",
-    \ fzf#wrap({'dir': expand('%:p:h')}))
-if has('nvim')
-  au! TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
-  au! FileType fzf tunmap <buffer> <Esc>
-endif
+" Telescope
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+lua <<EOF
+require('telescope').setup{
+  pickers = {
+    find_files = { theme = "dropdown" }
+  }
+}
+EOF
 
 " tpope/vim-fugitive
 nnoremap <leader>gs :G<cr>
 nnoremap <leader>gd :Gdiff main<cr>
 nnoremap <leader>gl :G log --oneline --decorate --all --graph<cr>
 
-" npm i -g typescript-language-server -s" neovim/nvim-lspconfig and nvim-lua/completion-nvim
 
 "Vimspector
 fun! GotoWindow(id)
@@ -187,15 +183,12 @@ let g:vimspector_sign_priority = {
   \ }
 
 "TreeSitter
-" lua <<EOF
-" require'nvim-treesitter.configs'.setup {
-"   highlight = {
-"     enable = true,
-"     custom_captures = {
-"       -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-"       ["foo.bar"] = "Identifier",
-"     },
-"     additional_vim_regex_highlighting = false,
-"   },
-" }
-" EOF
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
+
