@@ -5,6 +5,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'joshdick/onedark.vim'
   Plug 'vim-airline/vim-airline'
   Plug 'airblade/vim-gitgutter'
+  Plug 'altercation/vim-colors-solarized'
 
   " Prod
   Plug 'szw/vim-maximizer'
@@ -82,6 +83,7 @@ let mapleader = " "
 command! Config execute ":e ~/.config/nvim/init.vim"
 nmap <Leader>w :w<CR>
 nmap <Leader>q :q<CR>
+nnoremap <leader>X :only<CR>
 nnoremap <Leader>co :copen<CR>
 nnoremap <Leader>cn :cn<CR>
 nnoremap <Leader>cp :cp<CR>
@@ -204,6 +206,7 @@ lua require('nvim-autopairs').setup{}
 
 " 'hrsh7th/nvim-compe'
 lua << EOF
+vim.api.nvim_set_keymap("i", "<CR>", "compe#confirm({ 'keys': '<CR>', 'select': v:true })", { expr = true })
 require'compe'.setup {
   enabled = true;
   autocomplete = true;

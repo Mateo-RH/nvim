@@ -1,8 +1,0 @@
-{
-  "coc.preferences.formatOnSaveFiletypes": [
-    "javascript",
-    "typescript",
-    "json, typescriptreact"
-  ],
-  "python.jediPath": "/opt/homebrew/lib/python3.8/site-packages"
-}
