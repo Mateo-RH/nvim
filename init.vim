@@ -1,11 +1,12 @@
 call plug#begin('~/.config/nvim/plugged')
  "Colorshceme
-  Plug 'gruvbox-community/gruvbox'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-  Plug 'joshdick/onedark.vim'
   Plug 'vim-airline/vim-airline'
   Plug 'airblade/vim-gitgutter'
-  Plug 'altercation/vim-colors-solarized'
+  Plug 'gruvbox-community/gruvbox'
+  Plug 'joshdick/onedark.vim'
+  Plug 'sainnhe/sonokai'
+  
 
   " Prod
   Plug 'szw/vim-maximizer'
@@ -63,7 +64,6 @@ set signcolumn=yes
 set updatetime=750
 set colorcolumn=88
 set scrolloff=5
-set background=dark
 set wildmenu
 set numberwidth=1
 set showcmd
@@ -76,11 +76,24 @@ set nohlsearch
 if (has("termguicolors"))
   set termguicolors
 endif
+
 let g:netrw_banner=0
 let g:markdown_fenced_languages = ['javascript', 'js=javascript', 'json=javascript']
 
+" Colorshceme
+syntax enable
+let g:airline_theme='onedark'
+let g:gruvbox_contrast_dark='hard'
+let g:sonokai_style='shusia'
+let g:sonokai_diagnostic_virtual_text='colored'
+let g:sonokai_diagnostic_text_highlight=1
+let g:sonokai_menu_selection_background='red'
+set background=dark
+colorscheme sonokai
+
 let mapleader = " "
 command! Config execute ":e ~/.config/nvim/init.vim"
+command! Rconfig execute ":so ~/.config/nvim/init.vim"
 nmap <Leader>w :w<CR>
 nmap <Leader>q :q<CR>
 nnoremap <leader>X :only<CR>
@@ -98,10 +111,6 @@ inoremap ? ?<c-g>u
 nnoremap Y y$
 " Clean all buffers
 command! BufOnly silent! execute "%bd|e#|bd#"
-
-let g:airline_theme='onedark'
-let g:gruvbox_contrast_dark='hard'
-colorscheme gruvbox
 
 " Harpoon
 nmap <Leader>ha :lua require("harpoon.mark").add_file()<CR>
