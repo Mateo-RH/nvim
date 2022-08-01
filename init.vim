@@ -6,6 +6,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'airblade/vim-gitgutter'
   Plug 'gruvbox-community/gruvbox'
   Plug 'joshdick/onedark.vim'
+  Plug 'shaunsingh/solarized.nvim'
 
   " Prod
   Plug 'szw/vim-maximizer'
@@ -33,6 +34,7 @@ call plug#begin('~/.config/nvim/plugged')
   " language server
   Plug 'neovim/nvim-lspconfig'
   Plug 'hrsh7th/nvim-compe'
+  Plug 'pantharshit00/vim-prisma'
 
   " Vim inspector
   Plug 'puremourning/vimspector'

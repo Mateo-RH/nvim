@@ -2,7 +2,7 @@ set encoding=UTF-8
 set relativenumber
 set completeopt=menuone,noselect
 set mouse=a
-set splitright
+" set splitleft
 set splitbelow
 set expandtab
 set tabstop=2
