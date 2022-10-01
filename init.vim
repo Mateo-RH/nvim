@@ -1,6 +1,7 @@
 filetype plugin indent on
 call plug#begin('~/.config/nvim/plugged')
  "Colorshceme
+  Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'vim-airline/vim-airline'
   Plug 'airblade/vim-gitgutter'
