@@ -7,7 +7,6 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'airblade/vim-gitgutter'
   Plug 'gruvbox-community/gruvbox'
   Plug 'joshdick/onedark.vim'
-  Plug 'shaunsingh/solarized.nvim'
 
   " Prod
   Plug 'szw/vim-maximizer'
