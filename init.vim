@@ -65,3 +65,6 @@ nnoremap Y y$
 " Clean all buffers
 command! BufOnly silent! execute "%bd|e#|bd#"
 
+" Command to create file in the opened file's directory
+command -nargs=1 NewFile edit %:h/<args>
+
