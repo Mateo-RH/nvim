@@ -3,6 +3,14 @@ require'lspconfig'.tsserver.setup{}
 require'lspconfig'.rust_analyzer.setup({})
 require'lspconfig'.gopls.setup{}
 
+-- Turns of semantic tokens to avoid LSP overwrites on TreeSitter
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    client.server_capabilities.semanticTokensProvider = nil
+  end,
+});
+
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
