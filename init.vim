@@ -5,7 +5,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'vim-airline/vim-airline'
   Plug 'airblade/vim-gitgutter'
-  Plug 'gruvbox-community/gruvbox'
+  Plug 'sainnhe/gruvbox-material'
   Plug 'joshdick/onedark.vim'
 
   " Prod

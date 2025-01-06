@@ -19,7 +19,7 @@ set cmdheight=1
 set shortmess+=c
 set signcolumn=yes
 set updatetime=750
-set colorcolumn=88
+set colorcolumn=110
 set scrolloff=5
 set wildmenu
 set numberwidth=1
