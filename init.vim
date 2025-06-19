@@ -9,7 +9,6 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'joshdick/onedark.vim'
 
   " Prod
-  Plug 'szw/vim-maximizer'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'kassio/neoterm'
   Plug 'tpope/vim-commentary'
@@ -19,7 +18,6 @@ call plug#begin('~/.config/nvim/plugged')
   " Typing
   Plug 'tpope/vim-surround'
   Plug 'Yggdroot/indentLine'
-  Plug 'github/copilot.vim'
   Plug 'windwp/nvim-autopairs'
   Plug 'sbdchd/neoformat'
 
@@ -34,10 +32,6 @@ call plug#begin('~/.config/nvim/plugged')
   " language server
   Plug 'neovim/nvim-lspconfig'
   Plug 'hrsh7th/nvim-compe'
-  Plug 'pantharshit00/vim-prisma'
-
-  " Vim inspector
-  Plug 'puremourning/vimspector'
 call plug#end()
 
 let mapleader = " "
