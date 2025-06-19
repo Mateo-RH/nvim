@@ -1,5 +1,23 @@
 require'lspconfig'.pyright.setup{}
-require'lspconfig'.tsserver.setup{}
+require'lspconfig'.vtsls.setup{
+  settings = {
+    vtsls = {
+      experimental = {
+        completion = {
+          enableServerSideFuzzyMatch = true,  -- Filter completions server-side to reduce data transfer
+        }
+      }
+    },
+    typescript = {
+      preferences = {
+        includeCompletionsForModuleExports = false,  -- Skip node_modules suggestions for faster completion
+      },
+      tsserver = {
+        useSyntaxServer = "auto",  -- Separate lighter process for syntax, keeps editor responsive
+      }
+    }
+  }
+}
 require'lspconfig'.rust_analyzer.setup({})
 require'lspconfig'.gopls.setup{}
 
@@ -44,7 +62,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'rust_analyzer', 'tsserver', 'gopls' }
+local servers = { 'pyright', 'rust_analyzer', 'vtsls', 'gopls' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
