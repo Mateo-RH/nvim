@@ -47,6 +47,7 @@ nnoremap <Leader>co :copen<CR>
 nnoremap <Leader>cn :cn<CR>
 nnoremap <Leader>cp :cp<CR>
 xnoremap <Leader>p :\"_dP<CR>
+nnoremap <Leader>yf :let @+=expand('%')<CR>
 map <Leader>gp :!git pull --rebase && git push<CR>
 noremap <leader>/ :Commentary<cr>
 " Undo break points

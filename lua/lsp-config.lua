@@ -20,6 +20,7 @@ require'lspconfig'.vtsls.setup{
 }
 require'lspconfig'.rust_analyzer.setup({})
 require'lspconfig'.gopls.setup{}
+require'lspconfig'.terraformls.setup{}
 
 -- Turns of semantic tokens to avoid LSP overwrites on TreeSitter
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -62,7 +63,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'rust_analyzer', 'vtsls', 'gopls' }
+local servers = { 'pyright', 'rust_analyzer', 'vtsls', 'gopls', 'terraformls' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
