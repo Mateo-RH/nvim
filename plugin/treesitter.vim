@@ -1,8 +1,9 @@
 lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-}
+-- nvim-treesitter main branch: highlighting is started per-buffer;
+-- pcall skips filetypes without an installed parser
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function(args)
+    pcall(vim.treesitter.start, args.buf)
+  end,
+})
 EOF

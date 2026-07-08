@@ -28,10 +28,15 @@ call plug#begin('~/.config/nvim/plugged')
   " Finder
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'tpope/vim-fugitive'
+  Plug 'sindrets/diffview.nvim'
 
   " language server
   Plug 'neovim/nvim-lspconfig'
-  Plug 'hrsh7th/nvim-compe'
+  Plug 'hrsh7th/nvim-cmp'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-path'
+  Plug 'hrsh7th/cmp-nvim-lua'
 call plug#end()
 
 let mapleader = " "
